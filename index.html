@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Identitas Mahasiswa</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --accent: #2563eb;
+      --muted: #6b7280;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: var(--bg);
+      margin: 0;
+      padding: 32px;
+      color: #111;
+    }
+
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--card);
+      padding: 28px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(20, 20, 40, 0.06);
+    }
+
+    h1 {
+      font-size: 20px;
+      margin: 0 0 12px;
+    }
+
+    p.lead {
+      margin: 0 0 20px;
+      color: var(--muted);
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #e6e9ef;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 96px;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    button {
+      background: var(--accent);
+      color: #fff;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button.secondary {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid #dbeafe;
+    }
+
+    @media (max-width: 640px) {
+      form {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card" role="region" aria-labelledby="formTitle">
+      <h1 id="formTitle">Identitas Mahasiswa</h1>
+      <p class="lead">
+        Silakan isi data di bawah ini. Semua field yang bertanda <em>required(*)</em> harus diisi.
+      </p>
+
+      <form id="registrationForm" action="#" method="post" novalidate>
+        <!-- Nama lengkap -->
+        <div class="full">
+          <label for="fullName">Nama Lengkap <span aria-hidden="true">*</span></label>
+          <input id="fullName" name="fullName" type="text" placeholder="Nama lengkap Anda" required autocomplete="name">
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label for="email">Email <span aria-hidden="true">*</span></label>
+          <input id="email" name="email" type="email" placeholder="name@example.com" required autocomplete="email">
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label for="password">Password <span aria-hidden="true">*</span></label>
+          <input id="password" name="password" type="password" minlength="6" placeholder="Minimal 6 karakter" required autocomplete="new-password">
+        </div>
+
+        <!-- Jenis Kelamin -->
+        <div class="full">
+          <label>Jenis Kelamin <span aria-hidden="true">*</span></label>
+          <div class="radio-group" role="radiogroup" aria-labelledby="genderLabel">
+            <label><input type="radio" name="gender" value="Laki-laki" required> Laki-laki</label>
+            <label><input type="radio" name="gender" value="Perempuan"> Perempuan</label>
+            <label><input type="radio" name="gender" value="Lainnya"> Lainnya</label>
+          </div>
+        </div>
+
+        <!-- Tanggal Lahir -->
+        <div>
+          <label for="birthdate">Tanggal Lahir <span aria-hidden="true">*</span></label>
+          <input id="birthdate" name="birthdate" type="date" required>
+        </div>
+
+        <!-- Pilihan Program Studi -->
+        <div>
+          <label for="prodi">Pilihan Program Studi <span aria-hidden="true">*</span></label>
+          <select id="prodi" name="prodi" required>
+            <option value="" disabled selected>-- Pilih Program Studi --</option>
+            <option>Informatika</option>
+            <option>Sistem Informasi</option>
+            <option>Teknik Komputer</option>
+            <option>Ilmu Komputer</option>
+            <option>Matematika</option>
+          </select>
+        </div>
+
+        <!-- Alamat -->
+        <div class="full">
+          <label for="address">Alamat <span aria-hidden="true">*</span></label>
+          <textarea id="address" name="address" placeholder="Tuliskan alamat lengkap" required></textarea>
+        </div>
+
+        <!-- Tombol aksi -->
+        <div class="full actions">
+          <button type="reset" class="secondary">Reset</button>
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+
+      <script>
+        // Validasi ringan sebelum submit
+        document.getElementById('registrationForm').addEventListener('submit', function (e) {
+          if (!this.checkValidity()) {
+            e.preventDefault();
+            this.reportValidity();
+            return;
+          }
+
+          // Contoh: tampilkan ringkasan di console (simulasi pengiriman ke server)
+          e.preventDefault();
+          const data = Object.fromEntries(new FormData(this).entries());
+          console.log('Form submitted (contoh):', data);
+          alert('Data berhasil disubmit (contoh). Cek console untuk detail.');
+        });
+      </script>
+    </div>
+  </div>
+</body>
+</html>
